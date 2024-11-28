@@ -1,0 +1,38 @@
+version: '3'
+services:
+  db-mysql-lifeHub:
+    container_name: db-mysql-lifeHub
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'lifeHub_db'
+      MYSQL_USER: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - '3307:3306'
+    volumes:
+      - db-mysql-lifeHub:/var/lib/mysql
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql-starter:3306/lifeHub_db?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=${MYSQL_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - APPLICATION_SECURITY_JWT_SECRETKEY=${APPLICATION_SECURITY_JWT_SECRETKEY}
+    depends_on:
+      - db-mysql-lifeHub
+    volumes:
+      - .:/app
+      - ~/.m2:/root/.m2
+      - ./target:/app/target
+      - /tmp/.X11-unix:/tmp/.X11-unix
+
+volumes:
+  db-mysql-lifeHub: {}
