@@ -9,15 +9,17 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserEntityTest {
     private User user;
     private String userEmail;
+    private String userPassword;
     private String userRoleUser;
     private String userRoleAdmin;
 
     @BeforeEach
     public void setUp() {
         userEmail = "email@mail.com";
+        userPassword = "password";
         userRoleUser = "User";
         userRoleAdmin = "Admin";
-        user = new User(userEmail, userRoleUser);
+        user = new User(userEmail, userPassword, userRoleUser);
     }
 
     @Test

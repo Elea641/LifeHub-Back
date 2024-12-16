@@ -8,12 +8,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
+    private String password;
     private String role;
 
     public User() {}
 
     public User(String email, String role) {
         setEmail(email);
+        setRole(role);
+    }
+
+    public User(String email, String password, String role) {
+        setEmail(email);
+        setPassword(password);
         setRole(role);
     }
 
@@ -34,6 +41,14 @@ public class User {
             throw new IllegalArgumentException("Invalid email format");
         }
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getRole() {

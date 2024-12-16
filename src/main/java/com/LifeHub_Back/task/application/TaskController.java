@@ -18,7 +18,8 @@ public class TaskController {
             Map<String, String> response = new HashMap<>();
             response.put("task", "Example task");
 
-            return ResponseEntity.ok().body(response);        } catch (Exception e) {
+            return ResponseEntity.ok().body(response);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
