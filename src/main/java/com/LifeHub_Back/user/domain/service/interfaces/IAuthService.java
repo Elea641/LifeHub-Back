@@ -1,4 +1,4 @@
-package com.LifeHub_Back.user.domain.interfaces;
+package com.LifeHub_Back.user.domain.service.interfaces;
 
 import com.LifeHub_Back.user.domain.dto.AuthRequest;
 import com.LifeHub_Back.user.domain.dto.AuthResponse;

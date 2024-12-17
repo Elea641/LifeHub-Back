@@ -122,27 +122,27 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return true;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -153,12 +153,6 @@ public class User implements UserDetails {
         this.createdAt = createdAt;
     }
 
-    public void updatePassword(String rawPassword, PasswordEncoder passwordEncoder) {
-        if (rawPassword == null || rawPassword.length() < 8) {
-            throw new IllegalArgumentException("Password must be at least 8 characters long");
-        }
-        this.password = passwordEncoder.encode(rawPassword);
-    }
 
     @Override
     public String toString() {
