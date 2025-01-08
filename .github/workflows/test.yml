@@ -1,17 +1,28 @@
-name: Run tests
+name: Run Tests
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  run-tests:
-    name: Unit tests
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
-          distribution: 'corretto'
           java-version: '17'
 
+      - name: Build with Maven
+        run: mvn clean install
+
       - name: Run tests
-        run: mvn -B test --file pom.xml
+        run: mvn test
