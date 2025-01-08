@@ -4,6 +4,8 @@ import com.LifeHub_Back.user.domain.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserEntityTest {
@@ -19,7 +21,7 @@ public class UserEntityTest {
         userPassword = "password";
         userRoleUser = "User";
         userRoleAdmin = "Admin";
-        user = new User(userEmail, userPassword, userRoleUser);
+        user = new User(userEmail, userPassword, userRoleUser, LocalDateTime.of(2025, 1, 8, 10, 0, 0));
     }
 
     @Test
@@ -27,6 +29,13 @@ public class UserEntityTest {
         Long id = 1L;
         user.setId(id);
         assertEquals(id, user.getId());
+    }
+
+    @Test
+    void test_User_Password() {
+
+        user.setPassword(userPassword);
+        assertEquals("password", user.getPassword());
     }
 
     @Test
@@ -68,5 +77,13 @@ public class UserEntityTest {
     void test_Default_Role_Invalid() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> new User(userEmail, "InvalidRole"));
         assertEquals("Invalid role: must be 'Admin' or 'User'", exception.getMessage());
+    }
+
+    @Test
+    void test_User_LocalDateTime() {
+        LocalDateTime expectedDateTime = LocalDateTime.of(2025, 1, 8, 10, 0, 0);
+        LocalDateTime actualDateTime = user.getCreatedAt();
+
+        assertEquals(expectedDateTime, actualDateTime);
     }
 }

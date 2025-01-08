@@ -34,7 +34,7 @@ public class User implements UserDetails {
         setRole(role);
     }
 
-    private User(String email, String password, String role, LocalDateTime createdAt) {
+    public User(String email, String password, String role, LocalDateTime createdAt) {
         if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             throw new IllegalArgumentException("Invalid email format");
         }
