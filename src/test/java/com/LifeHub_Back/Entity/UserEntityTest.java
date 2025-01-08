@@ -49,13 +49,13 @@ public class UserEntityTest {
     @Test
     void test_User_Role_User() {
         user.setRole(userRoleUser);
-        assertEquals(userRoleUser, user.getRole());
+        assertEquals("ROLE_USER", user.getRole());
     }
 
     @Test
     void test_User_Role_Admin() {
         user.setRole(userRoleAdmin);
-        assertEquals(userRoleAdmin, user.getRole());
+        assertEquals("ROLE_ADMIN", user.getRole());
     }
 
     @Test

@@ -35,6 +35,9 @@ public class User implements UserDetails {
     }
 
     private User(String email, String password, String role, LocalDateTime createdAt) {
+        if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            throw new IllegalArgumentException("Invalid email format");
+        }
         this.email = email;
         this.password = password;
         this.role = role;
@@ -104,6 +107,9 @@ public class User implements UserDetails {
     }
 
     public void setRole(String role) {
+        if (!role.equals("Admin") && !role.equals("User")) {
+            throw new IllegalArgumentException("Invalid role: must be 'Admin' or 'User'");
+        }
         if (role == null) {
             throw new IllegalArgumentException("Role cannot be null");
         }
