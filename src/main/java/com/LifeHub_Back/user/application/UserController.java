@@ -19,7 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<List<UserDto>> getAll() {
         try {
             return  ResponseEntity.ok().body(userService.getAllUsers());

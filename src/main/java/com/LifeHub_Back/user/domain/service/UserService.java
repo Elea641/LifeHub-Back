@@ -53,7 +53,7 @@ public class UserService implements IUserService {
         if (authentication.isAuthenticated()) {
             String currentUsername = authentication.getName();
             Optional<User> currentUser = userRepository.findByEmail(currentUsername);
-
+            System.out.println(currentUser);
             if (currentUser.isPresent()) {
                 return userMapper.toDto(currentUser.get());
             } else {

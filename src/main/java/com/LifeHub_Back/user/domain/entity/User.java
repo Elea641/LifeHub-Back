@@ -15,8 +15,11 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "email", unique = true)
     private String email;
+    @Column(name = "password", nullable = false)
     private String password;
+    @Column(name = "role", nullable = false)
     private String role;
     @Column(name = "created_At")
     private LocalDateTime createdAt;
@@ -113,7 +116,7 @@ public class User implements UserDetails {
         if (role == null) {
             throw new IllegalArgumentException("Role cannot be null");
         }
-        this.role = role.startsWith("ROLE_") ? role : "ROLE_" + role.toUpperCase();
+        this.role = role;
     }
 
     @Override
@@ -158,11 +161,13 @@ public class User implements UserDetails {
         this.createdAt = createdAt;
     }
 
-
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }
