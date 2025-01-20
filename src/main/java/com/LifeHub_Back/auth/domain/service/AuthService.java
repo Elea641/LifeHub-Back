@@ -3,6 +3,7 @@ package com.LifeHub_Back.auth.domain.service;
 import com.LifeHub_Back.auth.domain.dto.AuthRequest;
 import com.LifeHub_Back.auth.domain.dto.AuthResponse;
 import com.LifeHub_Back.auth.domain.service.interfaces.IAuthService;
+import com.LifeHub_Back.auth.infrastructure.exception.AuthException;
 import com.LifeHub_Back.user.domain.entity.User;
 import com.LifeHub_Back.user.infrastructure.interfaces.IUserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,25 +32,25 @@ public class AuthService implements IAuthService {
     }
 
     public Map<String, String> register(AuthRequest request) throws Exception {
-        request.validate();
-        if (!repository.findByEmail(request.getEmail()).isPresent()) {
-            User user = User.builder()
-                    .email(request.getEmail())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .role("ROLE_USER")
-                    .createdAt(LocalDateTime.now())
-                    .build();
+            request.validate();
 
-            repository.save(user);
-
-            Map<String, String> response= new HashMap<>();
-            response.put("message", "Account successfully created");
-            return response;
-
-        } else {
-            throw new Exception("Impossible to create your account with this information");
+        if (repository.findByEmail(request.getEmail()).isPresent()) {
+            throw new AuthException("User with this email already exists.");
         }
-    }
+
+        User user = User.builder()
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role("ROLE_USER")
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        repository.save(user);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Account successfully created");
+        return response;
+        }
 
     public AuthResponse login(AuthRequest request) {
         authenticationManager.authenticate(

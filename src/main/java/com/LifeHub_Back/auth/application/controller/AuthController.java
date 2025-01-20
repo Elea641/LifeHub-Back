@@ -21,20 +21,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String, String>> signUp(@RequestBody AuthRequest user) {
-        try {
+    public ResponseEntity<Map<String, String>> signUp(@RequestBody AuthRequest user) throws Exception {
             return ResponseEntity.ok().body(service.register(user));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> signIn(@RequestBody AuthRequest user) {
-        try {
             return ResponseEntity.ok().body(service.login(user));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }
