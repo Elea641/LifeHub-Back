@@ -117,7 +117,8 @@ public class User implements UserDetails {
         if (role == null) {
             throw new IllegalArgumentException("Role cannot be null");
         }
-        this.role = role;
+        if(role == "User") this.role = "ROLE_USER";
+        if(role == "Admin") this.role = "ROLE_ADMIN";
     }
 
     @Override
