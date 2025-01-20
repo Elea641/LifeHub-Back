@@ -18,7 +18,6 @@ public class AuthRequest {
         return password;
     }
 
-    // Méthode de validation
     public void validate() {
         if (email == null || email.trim().isEmpty()) {
             throw new IllegalArgumentException("Email must not be empty");

@@ -35,13 +35,10 @@ public class ApplicationConfig implements WebMvcConfigurer{
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    // Allows to set custom authentication logic
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        // Define the service used by authenticationProvider
         authProvider.setUserDetailsService(userDetailsService());
-        // What password encoder we are using
         authProvider.setPasswordEncoder(passwordConfig.passwordEncoder());
         return authProvider;
     }
