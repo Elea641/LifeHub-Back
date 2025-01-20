@@ -2,11 +2,11 @@ package com.LifeHub_Back.user.domain.service;
 
 import com.LifeHub_Back.user.domain.dto.UserDto;
 import com.LifeHub_Back.user.domain.entity.User;
-import com.LifeHub_Back.user.domain.service.interfaces.ISecurityContextAuthentificationService;
 import com.LifeHub_Back.user.domain.service.interfaces.IUserMapperService;
 import com.LifeHub_Back.user.domain.service.interfaces.IUserService;
 import com.LifeHub_Back.user.infrastructure.interfaces.IUserRepository;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
@@ -21,17 +21,15 @@ public class UserService implements IUserService {
 
     private final IUserRepository userRepository;
     private final IUserMapperService userMapper;
-    private final ISecurityContextAuthentificationService securityContextAuthentificationService;
 
 
-    public UserService(IUserRepository userRepository, IUserMapperService userMapper, ISecurityContextAuthentificationService securityContextAuthentificationService) {
+    public UserService(IUserRepository userRepository, IUserMapperService userMapper) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
-        this.securityContextAuthentificationService = securityContextAuthentificationService;
     }
 
     public List<UserDto> getAllUsers() throws Exception {
-        Authentication authentication = securityContextAuthentificationService.getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication.isAuthenticated()) {
             List<User> users = userRepository.findAll();
@@ -49,11 +47,10 @@ public class UserService implements IUserService {
     }
 
     public UserDto getCurrentUser() throws Exception {
-        Authentication authentication = securityContextAuthentificationService.getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.isAuthenticated()) {
             String currentUsername = authentication.getName();
             Optional<User> currentUser = userRepository.findByEmail(currentUsername);
-            System.out.println(currentUser);
             if (currentUser.isPresent()) {
                 return userMapper.toDto(currentUser.get());
             } else {

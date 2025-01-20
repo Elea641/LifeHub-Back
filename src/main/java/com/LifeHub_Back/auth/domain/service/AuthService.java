@@ -1,10 +1,12 @@
-package com.LifeHub_Back.user.domain.service;
+package com.LifeHub_Back.auth.domain.service;
 
-import com.LifeHub_Back.user.domain.dto.AuthRequest;
-import com.LifeHub_Back.user.domain.dto.AuthResponse;
+import com.LifeHub_Back.auth.domain.dto.AuthRequest;
+import com.LifeHub_Back.auth.domain.dto.AuthResponse;
+import com.LifeHub_Back.auth.domain.service.interfaces.IAuthService;
 import com.LifeHub_Back.user.domain.entity.User;
-import com.LifeHub_Back.user.domain.service.interfaces.IAuthService;
 import com.LifeHub_Back.user.infrastructure.interfaces.IUserRepository;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,11 +21,13 @@ public class AuthService implements IAuthService {
     private final IUserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
-    public AuthService(IUserRepository repository, PasswordEncoder passwordEncoder, JwtService jwtService) {
+    public AuthService(IUserRepository repository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
     }
 
     public Map<String, String> register(AuthRequest request) throws Exception {
@@ -48,6 +52,13 @@ public class AuthService implements IAuthService {
     }
 
     public AuthResponse login(AuthRequest request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+
         User user = repository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 

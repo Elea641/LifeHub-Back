@@ -1,6 +1,6 @@
-package com.LifeHub_Back.configuration.application;
+package com.LifeHub_Back.auth.domain.service.filter;
 
-import com.LifeHub_Back.user.domain.service.JwtService;
+import com.LifeHub_Back.auth.domain.service.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;

@@ -1,4 +1,4 @@
-package com.LifeHub_Back.user.domain.service;
+package com.LifeHub_Back.auth.domain.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

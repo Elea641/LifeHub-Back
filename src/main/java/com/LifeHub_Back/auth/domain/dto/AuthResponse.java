@@ -1,8 +1,4 @@
-package com.LifeHub_Back.user.domain.dto;
-
-import com.LifeHub_Back.user.domain.entity.User;
-
-import java.time.LocalDateTime;
+package com.LifeHub_Back.auth.domain.dto;
 
 public class AuthResponse {
     private String token;

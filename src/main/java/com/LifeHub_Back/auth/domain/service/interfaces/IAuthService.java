@@ -1,7 +1,7 @@
-package com.LifeHub_Back.user.domain.service.interfaces;
+package com.LifeHub_Back.auth.domain.service.interfaces;
 
-import com.LifeHub_Back.user.domain.dto.AuthRequest;
-import com.LifeHub_Back.user.domain.dto.AuthResponse;
+import com.LifeHub_Back.auth.domain.dto.AuthRequest;
+import com.LifeHub_Back.auth.domain.dto.AuthResponse;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.LifeHub_Back.user.domain.dto;
+package com.LifeHub_Back.auth.domain.dto;
 
 public class AuthRequest {
 

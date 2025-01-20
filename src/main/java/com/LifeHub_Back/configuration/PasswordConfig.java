@@ -1,4 +1,4 @@
-package com.LifeHub_Back.configuration.application;
+package com.LifeHub_Back.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

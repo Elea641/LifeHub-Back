@@ -1,7 +1,7 @@
-package com.LifeHub_Back.user.application;
+package com.LifeHub_Back.auth.application.controller;
 
-import com.LifeHub_Back.user.domain.dto.AuthRequest;
-import com.LifeHub_Back.user.domain.service.interfaces.IAuthService;
+import com.LifeHub_Back.auth.domain.dto.AuthRequest;
+import com.LifeHub_Back.auth.domain.service.interfaces.IAuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

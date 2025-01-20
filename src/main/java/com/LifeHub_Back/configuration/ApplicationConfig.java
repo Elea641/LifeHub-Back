@@ -1,4 +1,4 @@
-package com.LifeHub_Back.configuration.application;
+package com.LifeHub_Back.configuration;
 
 import com.LifeHub_Back.user.infrastructure.interfaces.IUserRepository;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 
 @Configuration
 @ComponentScan
-public class ApplicationConfig implements WebMvcConfigurer {
+public class ApplicationConfig implements WebMvcConfigurer{
 
     private final IUserRepository repository;
     private final PasswordConfig passwordConfig;
@@ -35,28 +35,30 @@ public class ApplicationConfig implements WebMvcConfigurer {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
+    // Allows to set custom authentication logic
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        // Define the service used by authenticationProvider
+        authProvider.setUserDetailsService(userDetailsService());
+        // What password encoder we are using
+        authProvider.setPasswordEncoder(passwordConfig.passwordEncoder());
+        return authProvider;
+    }
+
     @Bean
     public AuthenticationManager customAuthenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordConfig.passwordEncoder());
-        return authProvider;
-    }
-
-    @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
         configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "Enctype"));
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
