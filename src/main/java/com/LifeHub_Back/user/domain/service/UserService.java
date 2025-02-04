@@ -6,6 +6,7 @@ import com.LifeHub_Back.user.domain.service.interfaces.ISecurityContextAuthentif
 import com.LifeHub_Back.user.domain.service.interfaces.IUserMapperService;
 import com.LifeHub_Back.user.domain.service.interfaces.IUserService;
 import com.LifeHub_Back.user.infrastructure.interfaces.IUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class UserService implements IUserService {
     private final IUserMapperService userMapper;
     private final ISecurityContextAuthentificationService securityContextAuthentificationService;
 
+    @Autowired
     public UserService(IUserRepository userRepository, IUserMapperService userMapper, ISecurityContextAuthentificationService securityContextAuthentificationService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;

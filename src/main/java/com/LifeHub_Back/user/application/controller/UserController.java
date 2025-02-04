@@ -1,7 +1,8 @@
-package com.LifeHub_Back.user.application;
+package com.LifeHub_Back.user.application.controller;
 
 import com.LifeHub_Back.user.domain.dto.UserDto;
 import com.LifeHub_Back.user.domain.service.interfaces.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +16,12 @@ public class UserController {
 
     private final IUserService userService;
 
+    @Autowired
     public UserController(IUserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<UserDto>> getAll() {
         try {
             return  ResponseEntity.ok().body(userService.getAllUsers());
