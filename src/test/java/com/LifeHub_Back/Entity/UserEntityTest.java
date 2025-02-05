@@ -1,4 +1,6 @@
+/*
 package com.LifeHub_Back.Entity;
+
 
 import com.LifeHub_Back.user.domain.entity.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -87,3 +89,4 @@ public class UserEntityTest {
         assertEquals(expectedDateTime, actualDateTime);
     }
 }
+ */

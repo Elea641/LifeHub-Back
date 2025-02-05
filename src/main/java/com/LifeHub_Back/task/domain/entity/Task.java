@@ -1,12 +1,11 @@
 package com.LifeHub_Back.task.domain.entity;
 
-import com.LifeHub_Back.task.domain.validators.IFieldValidator;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class Task implements IFieldValidator {
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,16 +22,6 @@ public class Task implements IFieldValidator {
     private Task(String name, String description) {
         this.name = name;
         this.description = description;
-    }
-
-    @Override
-    public void validate() {
-        if (name == null || name.length() < 1 || name.length() > 255) {
-            throw new IllegalArgumentException("Name must be between 1 and 255 characters.");
-        }
-        if (description == null || description.trim().isEmpty()) {
-            throw new IllegalArgumentException("Description cannot be null or empty.");
-        }
     }
 
     @PrePersist
@@ -105,7 +94,7 @@ public class Task implements IFieldValidator {
 
         public Task build() {
             Task task = new Task(name, description);
-            task.validate();
+            task.onCreate();
             return task;
         }
     }
