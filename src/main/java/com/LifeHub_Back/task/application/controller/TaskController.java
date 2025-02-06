@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
@@ -26,6 +28,22 @@ public class TaskController {
         try {
             Task createdTask = taskService.createTask(taskDto);
             return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
+        } catch (TaskValidationException e) {
+            ErrorResponse errorResponse = new ErrorResponse("Validation error", e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse("An unexpected error occurred", e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<?> getAllTasks() {
+        try {
+            List<Task> tasks = taskService.getAllTasks();
+
+            return new ResponseEntity<>(tasks, HttpStatus.OK);
+
         } catch (TaskValidationException e) {
             ErrorResponse errorResponse = new ErrorResponse("Validation error", e.getMessage());
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);

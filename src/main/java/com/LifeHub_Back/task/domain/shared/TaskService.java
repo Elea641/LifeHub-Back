@@ -9,6 +9,7 @@ import com.LifeHub_Back.task.infrastructure.repository.ITaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,15 +26,25 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task createTask(TaskDto taskDto) {
-         taskValidator.validate(taskDto);
+        taskValidator.validate(taskDto);
 
-         Task createTask = new Task.Builder()
-                 .setName(taskDto.getName())
-                 .setDescription(taskDto.getDescription())
-                 .build();
+        Task createTask = new Task.Builder()
+                .setName(taskDto.getName())
+                .setDescription(taskDto.getDescription())
+                .build();
 
-         taskRepository.save(createTask);
-         return createTask;
+        taskRepository.save(createTask);
+        return createTask;
+    }
+
+    public List<Task> getAllTasks() {
+        List<Task> tasks = taskRepository.findAll();
+
+        if (tasks.isEmpty()) {
+            throw new TaskValidationException("No tasks found");
+        }
+
+        return tasks;
     }
 
     public Task getTaskById(Long id) {
