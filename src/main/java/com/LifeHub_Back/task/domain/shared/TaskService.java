@@ -9,6 +9,8 @@ import com.LifeHub_Back.task.infrastructure.repository.ITaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TaskService implements ITaskService {
 
@@ -32,6 +34,11 @@ public class TaskService implements ITaskService {
 
          taskRepository.save(createTask);
          return createTask;
+    }
+
+    public Task getTaskById(Long id) {
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new TaskValidationException("Task with ID " + id + " not found"));
     }
 }
 

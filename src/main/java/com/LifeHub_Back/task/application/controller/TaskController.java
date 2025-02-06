@@ -34,4 +34,18 @@ public class TaskController {
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getTask(@PathVariable Long id) {
+        try {
+            Task createdTask = taskService.getTaskById(id);
+            return new ResponseEntity<>(createdTask, HttpStatus.OK);
+        } catch (TaskValidationException e) {
+            ErrorResponse errorResponse = new ErrorResponse("Validation error", e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse("An unexpected error occurred", e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

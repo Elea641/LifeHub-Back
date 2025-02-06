@@ -19,6 +19,8 @@ public class Task {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    private Task() {}
+
     private Task(String name, String description) {
         this.name = name;
         this.description = description;

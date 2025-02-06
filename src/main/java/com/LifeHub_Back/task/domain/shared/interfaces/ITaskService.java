@@ -5,4 +5,6 @@ import com.LifeHub_Back.task.domain.entity.Task;
 
 public interface ITaskService {
     Task createTask(TaskDto taskDto);
+
+    Task getTaskById(Long id);
 }

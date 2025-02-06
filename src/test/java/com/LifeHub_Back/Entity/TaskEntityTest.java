@@ -27,7 +27,7 @@ public class TaskEntityTest {
     }
 
     @Test
-    public void testTaskCreation() {
+    public void test_Task_Creation() {
         assertNotNull(task, "Task should be created");
         assertEquals(name, task.getName(), "Task name should match");
         assertEquals(description, task.getDescription(), "Task description should match");
